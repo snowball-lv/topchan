@@ -6,8 +6,7 @@ require_relative "topchan/data"
 
 # board = Topchan::Data.get_boards().sample
 board = "mu"
-thread = Topchan::Data.get_threads(board).sample
-posts = Topchan::Data.get_posts(board, thread)
+threads = Topchan::Data.get_threads(board)
 
 # puts "/#{board}/#{thread}/#{post.first}"
 # puts post.last
@@ -23,7 +22,15 @@ def get_links(comment)
     }
 end
 
-posts.each do |post|
-    links = get_links(post.last)
-    puts links
+Topchan::Data.erase_links
+
+threads.each do |t|
+    posts = Topchan::Data.get_posts(board, t)
+    posts.each do |post|
+        links = get_links(post.last)
+        links.each do |ref_id|
+            Topchan::Data.create_link(post.first, ref_id)
+            puts "#{post.first} -> #{ref_id}"
+        end
+    end
 end
