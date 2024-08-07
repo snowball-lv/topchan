@@ -3,12 +3,21 @@ class DbUpdateJob < ApplicationJob
 
   def perform(*args)
     puts "Running db update job"
+    @new_boards = 0
+    @new_threads = 0
+    @updated_threads = 0
+    @new_posts = 0
     # unless MyHelpers.is_server_running?
     #   puts "Server isn't running, clearing crontab"
     #   system("whenever --clear-crontab")
     #   return
     # end
     update_db
+    # job report
+    puts "new_boards #{@new_boards}"
+    puts "new_threads #{@new_threads}"
+    puts "updated_threads #{@updated_threads}"
+    puts "new_posts #{@new_posts}"
   end
   
   private
@@ -27,6 +36,7 @@ class DbUpdateJob < ApplicationJob
         db_board.board = board["board"]
         db_board.title = board["title"]
         db_board.meta_description = board["meta_description"]
+        @new_boards += 1
       end
       update_board(db_board)
     end
@@ -45,12 +55,14 @@ class DbUpdateJob < ApplicationJob
       db_thread = db_board.db_threads.find_or_create_by(no: th["no"]) do |db_thread|
         db_thread.no = th["no"]
         db_thread.last_modified = Time.at(0)
+        @new_threads += 1
       end
 
       # update posts and update timestamp afterwards
       if last_modified > db_thread.last_modified
         update_thread(db_thread)
         db_thread.update(last_modified: last_modified)
+        @updated_threads += 1
       else
         puts "Thread /#{db_thread.db_board.board}/#{db_thread.no} up to date"
       end
@@ -64,8 +76,9 @@ class DbUpdateJob < ApplicationJob
     posts.each do |post|
       db_post = db_thread.db_posts.find_or_create_by(no: post["no"]) do |db_post|
         db_post.no = post["no"]
+        @new_posts += 1
       end
-      puts "Post /#{db_thread.db_board.board}/#{db_thread.no}/#{db_post.no}"
+      # puts "Post /#{db_thread.db_board.board}/#{db_thread.no}/#{db_post.no}"
     end
   end
 
