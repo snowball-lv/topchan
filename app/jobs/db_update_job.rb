@@ -8,7 +8,14 @@ class DbUpdateJob < ApplicationJob
       system("whenever --clear-crontab")
       return
     end
-    puts "Updating database"
-    sleep 3
+    update_db
   end
+  
+  private
+
+  def update_db
+    puts "Updating database"
+    @api = ChanApi.new
+  end
+
 end
