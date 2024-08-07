@@ -23,5 +23,12 @@ module Topchan
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+  
+    config.after_initialize do
+      puts "Updating crontab"
+      status = system("whenever --update-crontab")
+      abort "*** couldn't update crontab" unless status
+    end
+
   end
 end
