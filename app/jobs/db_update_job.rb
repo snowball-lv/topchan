@@ -28,8 +28,25 @@ class DbUpdateJob < ApplicationJob
         db_board.title = board["title"]
         db_board.meta_description = board["meta_description"]
       end
-      puts "Updating /#{db_board.board}/ - #{db_board.title}"
+      update_board(db_board)
     end
+  end
+
+  def update_board(db_board)
+    return unless db_board.board == "po"
+    puts "Updating /#{db_board.board}/ - #{db_board.title}"
+    threads = @api.get_threads(db_board.board)
+    threads.each do |th|
+      db_thread = db_board.db_threads.find_or_create_by(no: th["no"]) do |db_thread|
+        db_thread.no = th["no"]
+        db_thread.last_modified = th["last_modified"]
+      end
+      update_thread(db_thread)
+    end
+  end
+
+  def update_thread(db_thread)
+    puts "Updating thread /#{db_thread.db_board.board}/#{db_thread.no}"
   end
 
 end
