@@ -12,4 +12,15 @@ class DbPost < ApplicationRecord
   def get_com
     return JSON.parse(json)["com"]
   end
+
+  def get_refs
+    com = get_com
+    return [] if com.nil?
+    doc = Nokogiri::HTML(com)
+    links = doc.css("a.quotelink")
+    return links.map { |link|
+      link["href"].scan(/^#p(\d+)$/).first
+    }.compact.flatten
+  end
+
 end
