@@ -1,0 +1,10 @@
+<h1><%= @board.board %></h1>
+<h2><%= @board.title %></h2>
+
+<ul>
+<% @board.db_threads.each do |thread| %>
+    <li><a href="/threads/<%= @board.board %>/<%= thread.no %>">
+        <%= thread.no %>
+    </a></li>
+<% end %>
+</ul>
