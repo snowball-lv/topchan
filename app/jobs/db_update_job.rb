@@ -37,11 +37,24 @@ class DbUpdateJob < ApplicationJob
     puts "Updating /#{db_board.board}/ - #{db_board.title}"
     threads = @api.get_threads(db_board.board)
     threads.each do |th|
+      
+      # latest timestamp from web api
+      last_modified = Time.at(th["last_modified"])
+
+      # find or create thread object, set modified timestamp to 0
       db_thread = db_board.db_threads.find_or_create_by(no: th["no"]) do |db_thread|
         db_thread.no = th["no"]
-        db_thread.last_modified = th["last_modified"]
+        db_thread.last_modified = Time.at(0)
       end
-      update_thread(db_thread)
+
+      # update posts and update timestamp afterwards
+      if last_modified > db_thread.last_modified
+        update_thread(db_thread)
+        db_thread.update(last_modified: last_modified)
+      else
+        puts "Thread /#{db_thread.db_board.board}/#{db_thread.no} up to date"
+      end
+
     end
   end
 
