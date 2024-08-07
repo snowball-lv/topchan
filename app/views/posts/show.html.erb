@@ -2,3 +2,7 @@
 <h2><%= @board.title %></h2>
 <h3><%= @thread.no %></h3>
 <h4><%= @post.no %></h4>
+
+<p><pre>
+<%= JSON.pretty_generate(JSON.parse(@post.json)) %>
+</pre></p>

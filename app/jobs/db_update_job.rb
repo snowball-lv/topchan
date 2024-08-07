@@ -76,6 +76,7 @@ class DbUpdateJob < ApplicationJob
     posts.each do |post|
       db_post = db_thread.db_posts.find_or_create_by(no: post["no"]) do |db_post|
         db_post.no = post["no"]
+        db_post.json = JSON.generate(post)
         @new_posts += 1
       end
       # puts "Post /#{db_thread.db_board.board}/#{db_thread.no}/#{db_post.no}"
