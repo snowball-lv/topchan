@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_07_160432) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_07_160923) do
   create_table "db_boards", force: :cascade do |t|
     t.string "board"
     t.string "title"
     t.text "meta_description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "db_posts", force: :cascade do |t|
+    t.integer "no"
+    t.integer "db_thread_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["db_thread_id"], name: "index_db_posts_on_db_thread_id"
   end
 
   create_table "db_threads", force: :cascade do |t|
@@ -28,5 +36,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_07_160432) do
     t.index ["db_board_id"], name: "index_db_threads_on_db_board_id"
   end
 
+  add_foreign_key "db_posts", "db_threads"
   add_foreign_key "db_threads", "db_boards"
 end

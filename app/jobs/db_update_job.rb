@@ -47,6 +47,13 @@ class DbUpdateJob < ApplicationJob
 
   def update_thread(db_thread)
     puts "Updating thread /#{db_thread.db_board.board}/#{db_thread.no}"
+    posts = @api.get_posts(db_thread.db_board.board, db_thread.no)
+    posts.each do |post|
+      db_post = db_thread.db_posts.find_or_create_by(no: post["no"]) do |db_post|
+        db_post.no = post["no"]
+      end
+      puts "Post /#{db_thread.db_board.board}/#{db_thread.no}/#{db_post.no}"
+    end
   end
 
 end
