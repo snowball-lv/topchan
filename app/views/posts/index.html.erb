@@ -1,0 +1,18 @@
+<p>Total posts <%= DbPost.count %></p>
+<p>Page <%= @page %></p>
+
+<a href="/posts/<%= @page - 1 %>"><< Prev</a>
+<a href="/posts/<%= @page + 1 %>">Next >></a>
+
+<p>Showing <%= @from %> to <%= @to %> </p>
+
+<ul>
+<% @posts.each do |post| %>
+    <li>
+    <p>/<%= post.get_board_code %>/ <%= post.no %></p>
+    <% unless post.get_com.nil? %>
+        <p><%= post.get_com %></p>
+    <% end %>
+    </li>
+<% end %>
+</ul>

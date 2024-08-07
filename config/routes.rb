@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   get "/threads/:board/:no", to: "chan_threads#show"
 
   get "/posts/:board/:thread/:post", to: "posts#show"
+  get "/posts", to: "posts#index"
+  get "/posts/:page", to: "posts#index"
 
 end
