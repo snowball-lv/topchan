@@ -4,8 +4,8 @@
 
 <ul>
 <% @thread.db_posts.each do |post| %>
-    <li>
+    <li><a href="/posts/<%= @board.board %>/<%= @thread.no %>/<%= post.no %>">
         <%= post.no %>
-    </li>
+    </a></li>
 <% end %>
 </ul>
