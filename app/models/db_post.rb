@@ -24,6 +24,14 @@ class DbPost < ApplicationRecord
     return "/#{get_board_code}/#{no}"
   end
 
+  def get_db_refs
+    return DbReference.where(post: self).map { |r| r.ref.no }
+  end
+
+  def get_db_replies
+    return DbReference.where(ref: self).map { |r| r.post.no }
+  end
+
   def get_refs
     com = get_com
     return [] if com.nil?

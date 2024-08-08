@@ -10,14 +10,12 @@
 <% @posts.each do |post| %>
     <li>
     <p>
-    <a href="/posts/<%= post.get_path %>"><%= post.get_path %></a> |
-    <% unless (refs = post.get_refs).empty? %>
-        References <%= refs.join(", ") %>
-    </p>
-    <% end %>
+    <a href="/posts/<%= post.get_path %>"><%= post.get_path %></a>
     <% unless post.get_com.nil? %>
         <p><%= post.get_com %></p>
     <% end %>
+    <p>References <%= post.get_db_refs.join(", ") %></p>
+    <p>Replies <%= post.get_db_replies.join(", ") %></p>
     </li>
 <% end %>
 </ul>

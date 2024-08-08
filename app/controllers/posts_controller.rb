@@ -16,7 +16,13 @@ class PostsController < ApplicationController
     @page = (params[:page] || 0).to_i
     @from = @page * PER_PAGE
     @to = @from + PER_PAGE
-    @posts = DbPost.offset(@from).limit(PER_PAGE).all
+    @posts = DbPost
+        # .left_joins(:db_references)
+        .joins("left outer join db_references on db_posts.id = db_references.ref_id")
+        .group(:id)
+        .order("COUNT(db_references.post_id) DESC")
+        .offset(@from)
+        .limit(PER_PAGE)
   end
 
 end
