@@ -9,7 +9,12 @@
 <ul>
 <% @posts.each do |post| %>
     <li>
-    <p>/<%= post.get_board_code %>/ <%= post.no %></p>
+    <p>
+    /<%= post.get_board_code %>/ <%= post.no %> |
+    <% unless (refs = post.get_refs).empty? %>
+        References <%= refs.join(", ") %>
+    </p>
+    <% end %>
     <% unless post.get_com.nil? %>
         <p><%= post.get_com %></p>
     <% end %>
