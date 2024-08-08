@@ -1,8 +1,18 @@
-<p>Total posts <%= DbPost.count %></p>
-<p>Page <%= @page %></p>
 
-<a href="/posts/<%= @page - 1 %>"><< Prev</a>
-<a href="/posts/<%= @page + 1 %>">Next >></a>
+<h1>Topchan</h1>
+
+<a href="/posts">All</a>
+<%== DbBoard.all.map { |board| board.get_anchor }.join(" / ") %>
+
+<% if @board.nil? %>
+    <h2>All</h2>
+<% else %>
+    <h2>/<%= @board.board %>/ <%= @board.title %></h2>
+<% end %>
+
+<p>Posts <%= @num_posts %></p>
+
+<%= render "pager" %>
 
 <p>Showing <%= @from %> to <%= @to %> </p>
 
@@ -11,11 +21,15 @@
     <li>
     <p>
     <a href="/posts/<%= post.get_path %>"><%= post.get_path %></a>
+    <span>Replies <%= post.get_db_replies.count %></span>
+    <a href="<%= post.get_4chan_link %>">
+        Original
+    </a>
     <% unless post.get_com.nil? %>
         <p><%= post.get_com %></p>
     <% end %>
-    <p>References <%= post.get_db_refs.join(", ") %></p>
-    <p>Replies <%= post.get_db_replies.join(", ") %></p>
+    <!-- <p>References <%= post.get_db_refs.join(", ") %></p> -->
+    <!-- <p>Replies <%= post.get_db_replies.join(", ") %></p> -->
     </li>
 <% end %>
 </ul>

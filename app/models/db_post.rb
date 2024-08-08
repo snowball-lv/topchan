@@ -32,6 +32,10 @@ class DbPost < ApplicationRecord
     return DbReference.where(ref: self).map { |r| r.post.no }
   end
 
+  def get_4chan_link
+    "https://boards.4chan.org/#{get_board_code}/thread/#{get_thread_no}#p#{no}"
+  end
+
   def get_refs
     com = get_com
     return [] if com.nil?

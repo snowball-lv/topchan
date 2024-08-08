@@ -3,6 +3,9 @@
 <h3><%= @thread.no %></h3>
 <h4><%= @post.no %></h4>
 
+<p>References <%= @post.get_db_refs.join(", ") %></p>
+<p>Replies <%= @post.get_db_replies.join(", ") %></p>
+
 <p><pre>
 <%= JSON.pretty_generate(JSON.parse(@post.json)) %>
 </pre></p>

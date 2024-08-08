@@ -46,7 +46,7 @@ class DbUpdateJob < ApplicationJob
   end
 
   def update_board(db_board)
-    return unless db_board.board == "po"
+    return unless ["po", "b"].include?(db_board.board)
     puts "Updating /#{db_board.board}/ - #{db_board.title}"
     threads = @api.get_threads(db_board.board)
     threads.each do |th|
@@ -87,7 +87,8 @@ class DbUpdateJob < ApplicationJob
   end
 
   def update_references
-    posts = DbPost.all
+    # only process posts not already in the reference table
+    posts = DbPost.where.not(id: DbReference.pluck(:post_id))
     posts.each do |post|
       refs = post.get_refs
       next if refs.empty?

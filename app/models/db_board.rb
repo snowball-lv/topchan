@@ -4,4 +4,8 @@ class DbBoard < ApplicationRecord
 
     validates :board, :title, :meta_description, presence: true
     validates :board, uniqueness: true
+
+    def get_anchor
+        "<a href=\"/posts/?board=#{board}\">#{board}</a>"
+    end
 end

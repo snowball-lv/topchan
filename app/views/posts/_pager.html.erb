@@ -1,0 +1,4 @@
+
+<a href="<%= get_posts_query(@board, [@page - 1, 0].max, @omit_op) %>"><< Prev</a> |
+<span>Page <%= @page %></span> |
+<a href="<%= get_posts_query(@board, @page + 1, @omit_op) %>">Next >></a>

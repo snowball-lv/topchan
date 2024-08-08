@@ -16,6 +16,5 @@ Rails.application.routes.draw do
   get "/posts/:board/:thread/:post", to: "posts#show"
   get "/posts/:board/:post", to: "posts#show"
   get "/posts", to: "posts#index"
-  get "/posts/:page", to: "posts#index"
 
 end
