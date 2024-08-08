@@ -13,7 +13,7 @@ class DbUpdateJob < ApplicationJob
     #   system("whenever --clear-crontab")
     #   return
     # end
-    # update_db
+    update_db
     update_references
     # job report
     puts "new_boards #{@new_boards}"
@@ -46,7 +46,7 @@ class DbUpdateJob < ApplicationJob
   end
 
   def update_board(db_board)
-    return unless ["po", "b"].include?(db_board.board)
+    return unless ["po", "b", "r9k"].include?(db_board.board)
     puts "Updating /#{db_board.board}/ - #{db_board.title}"
     threads = @api.get_threads(db_board.board)
     threads.each do |th|

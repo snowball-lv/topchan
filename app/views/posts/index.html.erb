@@ -14,6 +14,14 @@
 
 <%= render "pager" %>
 
+<p>
+<% if @omit_op %>
+    <a href="<%= get_posts_query(@board, 0, !@omit_op) %>">Show OP</a>
+<% else %>
+    <a href="<%= get_posts_query(@board, 0, !@omit_op) %>">Hide OP</a>
+<% end %>
+</p>
+
 <p>Showing <%= @from %> to <%= @to %> </p>
 
 <ul>
@@ -26,7 +34,7 @@
         Original
     </a>
     <% unless post.get_com.nil? %>
-        <p><%= post.get_com %></p>
+        <p><%== post.get_com %></p>
     <% end %>
     <!-- <p>References <%= post.get_db_refs.join(", ") %></p> -->
     <!-- <p>Replies <%= post.get_db_replies.join(", ") %></p> -->
