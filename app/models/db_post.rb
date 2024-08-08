@@ -1,6 +1,8 @@
 class DbPost < ApplicationRecord
   belongs_to :db_thread
 
+  validates :no, :json, presence: true
+
   def get_thread_no
     return db_thread.no
   end
