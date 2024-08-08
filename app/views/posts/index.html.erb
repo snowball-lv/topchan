@@ -10,7 +10,7 @@
 <% @posts.each do |post| %>
     <li>
     <p>
-    /<%= post.get_board_code %>/ <%= post.no %> |
+    <a href="/posts/<%= post.get_path %>"><%= post.get_path %></a> |
     <% unless (refs = post.get_refs).empty? %>
         References <%= refs.join(", ") %>
     </p>

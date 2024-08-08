@@ -7,17 +7,20 @@ class DbUpdateJob < ApplicationJob
     @new_threads = 0
     @updated_threads = 0
     @new_posts = 0
+    @new_refs = 0
     # unless MyHelpers.is_server_running?
     #   puts "Server isn't running, clearing crontab"
     #   system("whenever --clear-crontab")
     #   return
     # end
-    update_db
+    # update_db
+    update_references
     # job report
     puts "new_boards #{@new_boards}"
     puts "new_threads #{@new_threads}"
     puts "updated_threads #{@updated_threads}"
     puts "new_posts #{@new_posts}"
+    puts "new_refs #{@new_refs}"
   end
   
   private
@@ -80,6 +83,29 @@ class DbUpdateJob < ApplicationJob
         @new_posts += 1
       end
       # puts "Post /#{db_thread.db_board.board}/#{db_thread.no}/#{db_post.no}"
+    end
+  end
+
+  def update_references
+    posts = DbPost.all
+    posts.each do |post|
+      refs = post.get_refs
+      next if refs.empty?
+      refs.each do |ref|
+        link_ref(post, ref)
+      end
+    end
+  end
+
+  def link_ref(post, ref_post_no)
+    board = post.db_thread.db_board
+    ref_post = DbPost.where(no: ref_post_no)
+        .joins(:db_thread).where(db_threads: { db_board: board })
+        .take
+    DbReference.find_or_create_by(post: post, ref: ref_post) do |ref|
+      ref.post = post
+      ref.ref = ref_post
+      @new_refs += 1
     end
   end
 

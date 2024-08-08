@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_07_202104) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_08_081321) do
   create_table "db_boards", force: :cascade do |t|
     t.string "board"
     t.string "title"
@@ -28,6 +28,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_07_202104) do
     t.index ["db_thread_id"], name: "index_db_posts_on_db_thread_id"
   end
 
+  create_table "db_references", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "ref_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_db_references_on_post_id"
+    t.index ["ref_id"], name: "index_db_references_on_ref_id"
+  end
+
   create_table "db_threads", force: :cascade do |t|
     t.integer "no"
     t.datetime "last_modified"
@@ -38,5 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_07_202104) do
   end
 
   add_foreign_key "db_posts", "db_threads"
+  add_foreign_key "db_references", "db_posts", column: "post_id"
+  add_foreign_key "db_references", "db_posts", column: "ref_id"
   add_foreign_key "db_threads", "db_boards"
 end
