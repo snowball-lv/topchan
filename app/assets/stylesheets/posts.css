@@ -11,10 +11,16 @@ body {
 .post {
     background-color: #d6daf0;
     border: 1px solid #b7c5d9;
+    border-left: none;
+    border-top: none;
     padding: 2px;
     margin: 4px;
 }
 
+a, a:visited {
+    color: #34345c;
+    text-decoration: underline;
+}
 .post-header {
     margin-left: 12px;
 }
@@ -24,4 +30,25 @@ body {
     margin-block-end: 1em;
     margin-inline-start: 40px;
     margin-inline-end: 40px;
+}
+
+.quote {
+    color: #789922;
+}
+
+.quotelink {
+    color: #d00 !important;
+    text-decoration: underline;
+}
+
+.banner {
+    font-family: Tahoma, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #af0a0f;
+}
+
+.info {
+    color: #0f0c5d;
+    font-weight: 700;
 }

@@ -1,19 +1,19 @@
 
 <%= stylesheet_link_tag "posts.css" %>
 
-<h1>Topchan</h1>
+<h1 class="banner">Topchan</h1>
 
 <a href="/posts">All</a>
 <%== DbBoard.get_boards_with_posts.map { |board|
         board.get_anchor }.join(" / ") %>
 
 <% if @board.nil? %>
-    <h2>All</h2>
+    <h2 class="banner">All</h2>
 <% else %>
-    <h2>/<%= @board.board %>/ <%= @board.title %></h2>
+    <h2 class="banner">/<%= @board.board %>/ <%= @board.title %></h2>
 <% end %>
 
-<p>Posts <%= @num_posts %></p>
+<p class="info">Posts <%= @num_posts %></p>
 
 <%= render "pager" %>
 
@@ -25,7 +25,7 @@
 <% end %>
 </p>
 
-<p>Showing <%= @from %> to <%= @to %> </p>
+<p class="info">Showing <%= @from %> to <%= @to %> </p>
 
 <ul>
 <% @posts.each do |post| %>
@@ -33,7 +33,7 @@
     <p class="post-header">
     <a href="<%= post.get_4chan_link %>" target="_blank"><%= post.get_path %></a>
     <span>|</span>
-    <span>Replies <%= post.get_db_replies.count %></span>
+    <span class="info">Replies <%= post.get_db_replies.count %></span>
     <p>
     <% unless post.get_com.nil? %>
         <p class="post-text"><%== post.get_com %></p>
