@@ -1,0 +1,27 @@
+html {
+    background-color: #eef2ff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.post {
+    background-color: #d6daf0;
+    border: 1px solid #b7c5d9;
+    padding: 2px;
+    margin: 4px;
+}
+
+.post-header {
+    margin-left: 12px;
+}
+
+.post-text {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 40px;
+    margin-inline-end: 40px;
+}

@@ -1,4 +1,6 @@
 
+<%= stylesheet_link_tag "posts.css" %>
+
 <h1>Topchan</h1>
 
 <a href="/posts">All</a>
@@ -27,15 +29,14 @@
 
 <ul>
 <% @posts.each do |post| %>
-    <li>
-    <p>
-    <a href="/posts/<%= post.get_path %>"><%= post.get_path %></a>
+    <li class="post">
+    <p class="post-header">
+    <a href="<%= post.get_4chan_link %>" target="_blank"><%= post.get_path %></a>
+    <span>|</span>
     <span>Replies <%= post.get_db_replies.count %></span>
-    <a href="<%= post.get_4chan_link %>">
-        Original
-    </a>
+    <p>
     <% unless post.get_com.nil? %>
-        <p><%== post.get_com %></p>
+        <p class="post-text"><%== post.get_com %></p>
     <% end %>
     <!-- <p>References <%= post.get_db_refs.join(", ") %></p> -->
     <!-- <p>Replies <%= post.get_db_replies.join(", ") %></p> -->
