@@ -2,7 +2,8 @@
 <h1>Topchan</h1>
 
 <a href="/posts">All</a>
-<%== DbBoard.all.map { |board| board.get_anchor }.join(" / ") %>
+<%== DbBoard.get_boards_with_posts.map { |board|
+        board.get_anchor }.join(" / ") %>
 
 <% if @board.nil? %>
     <h2>All</h2>

@@ -8,4 +8,8 @@ class DbBoard < ApplicationRecord
     def get_anchor
         "<a href=\"/posts/?board=#{board}\">#{board}</a>"
     end
+
+    def self.get_boards_with_posts
+        DbBoard.all.select { |b| b.db_threads.size > 0 }
+    end
 end
