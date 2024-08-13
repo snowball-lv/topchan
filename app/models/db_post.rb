@@ -36,6 +36,17 @@ class DbPost < ApplicationRecord
     "https://boards.4chan.org/#{get_board_code}/thread/#{get_thread_no}#p#{no}"
   end
 
+  def has_img?
+    JSON.parse(json).key?("filename")
+  end
+
+  def get_tn_link
+    obj = JSON.parse(json)
+    board = get_board_code
+    filename = "#{obj["tim"]}s.jpg"
+    return "https://i.4cdn.org/#{board}/#{filename}"
+  end
+
   def get_refs
     com = get_com
     return [] if com.nil?
