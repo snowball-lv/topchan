@@ -22,6 +22,6 @@
 set :output, "./log/schedule.log"
 env :PATH, ENV["PATH"]
 
-every 1.minutes do
+every 1.hours do
   runner "DbUpdateJob.perform_now"
 end
