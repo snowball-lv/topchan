@@ -20,6 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 
 set :output, "./log/schedule.log"
+env :PATH, ENV["PATH"]
 
 every 1.minutes do
   runner "DbUpdateJob.perform_now"

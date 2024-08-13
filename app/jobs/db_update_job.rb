@@ -8,11 +8,6 @@ class DbUpdateJob < ApplicationJob
     @updated_threads = 0
     @new_posts = 0
     @new_refs = 0
-    # unless MyHelpers.is_server_running?
-    #   puts "Server isn't running, clearing crontab"
-    #   system("whenever --clear-crontab")
-    #   return
-    # end
     update_db
     update_references
     # job report
@@ -46,7 +41,7 @@ class DbUpdateJob < ApplicationJob
   end
 
   def update_board(db_board)
-    return unless ["co", "x", "int"].include?(db_board.board)
+    return unless ["po"].include?(db_board.board)
     puts "Updating /#{db_board.board}/ - #{db_board.title}"
     threads = @api.get_threads(db_board.board)
     threads.each do |th|
