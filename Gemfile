@@ -67,3 +67,5 @@ group :test do
 end
 
 gem "whenever", "~> 1.0"
+
+gem "dotenv-rails", "~> 3.1"
