@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   # get "/topchan/:board/:thread/:post", to: "posts#show"
   # get "/topchan/:board/:post", to: "posts#show"
-  get "/topchan", to: "posts#index"
+
+  get "/", to: "posts#index"
+  get "/posts", to: "posts#index"
 
 end
