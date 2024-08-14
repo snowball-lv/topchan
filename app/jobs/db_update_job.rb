@@ -9,7 +9,7 @@ class DbUpdateJob < ApplicationJob
     @new_posts = 0
     @new_refs = 0
     update_db
-    update_references
+    # update_references
     # job report
     puts "new_boards #{@new_boards}"
     puts "new_threads #{@new_threads}"
@@ -60,6 +60,7 @@ class DbUpdateJob < ApplicationJob
       if last_modified > db_thread.last_modified
         update_thread(db_thread)
         db_thread.update(last_modified: last_modified)
+        update_references
         @updated_threads += 1
       else
         puts "Thread /#{db_thread.db_board.board}/#{db_thread.no} up to date"
