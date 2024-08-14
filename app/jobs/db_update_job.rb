@@ -75,6 +75,7 @@ class DbUpdateJob < ApplicationJob
       db_post = db_thread.db_posts.find_or_create_by(no: post["no"]) do |db_post|
         db_post.no = post["no"]
         db_post.json = JSON.generate(post)
+        db_post.processed = false
         @new_posts += 1
       end
       # puts "Post /#{db_thread.db_board.board}/#{db_thread.no}/#{db_post.no}"
@@ -82,14 +83,14 @@ class DbUpdateJob < ApplicationJob
   end
 
   def update_references
-    # only process posts not already in the reference table
-    posts = DbPost.where.not(id: DbReference.pluck(:post_id))
+    posts = DbPost.where(processed: false)
     posts.each do |post|
+      # puts "Processing post ##{post.no}"
       refs = post.get_refs
-      next if refs.empty?
       refs.each do |ref|
         link_ref(post, ref)
       end
+      post.update({processed: true})
     end
   end
 

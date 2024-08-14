@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_08_081321) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_14_175603) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "db_boards", force: :cascade do |t|
     t.string "board"
     t.string "title"
@@ -25,6 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_08_081321) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "json"
+    t.boolean "processed", default: false
     t.index ["db_thread_id"], name: "index_db_posts_on_db_thread_id"
   end
 
