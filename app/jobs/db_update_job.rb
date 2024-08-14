@@ -2,6 +2,7 @@ class DbUpdateJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
+    $stdout.sync = true
     puts "Running db update job"
     @new_boards = 0
     @new_threads = 0
