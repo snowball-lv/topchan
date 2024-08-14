@@ -6,15 +6,15 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "posts#index"
+  root "/topchan"
 
-  get "/boards", to: "boards#index"
-  get "/boards/:id", to: "boards#show"
+  # get "/boards", to: "boards#index"
+  # get "/boards/:id", to: "boards#show"
 
-  get "/threads/:board/:no", to: "chan_threads#show"
+  # get "/threads/:board/:no", to: "chan_threads#show"
 
-  get "/posts/:board/:thread/:post", to: "posts#show"
-  get "/posts/:board/:post", to: "posts#show"
-  get "/posts", to: "posts#index"
+  # get "/topchan/:board/:thread/:post", to: "posts#show"
+  # get "/topchan/:board/:post", to: "posts#show"
+  get "/topchan", to: "posts#index"
 
 end
